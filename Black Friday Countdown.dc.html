@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:'Gotham';src:url('fonts/Gotham-Black.otf') format('opentype');font-weight:900;font-style:normal;font-display:swap}
+@font-face{font-family:'Gotham';src:url('fonts/Gotham-Bold.otf') format('opentype');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'Gotham';src:url('fonts/GothamMedium.ttf') format('truetype');font-weight:500;font-style:normal;font-display:swap}
+html,body{margin:0;padding:0}
+body{background:#f4f4f4;font-family:'Gotham','Helvetica Now Text','Helvetica Neue',Arial,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#ff9900;text-decoration:none}
+a:hover{text-decoration:underline}
+</style>
+</helmet>
+<div style="min-height:100vh;box-sizing:border-box;padding:clamp(16px,4vw,48px) clamp(12px,3vw,32px);display:flex;align-items:center;justify-content:center">
+  <div lang="fr" data-screen-label="Countdown" style="container-type:inline-size;position:relative;overflow:hidden;box-sizing:border-box;width:100%;max-width:960px;margin:0 auto;border-radius:8px;background:#000000;color:#ffffff;display:flex;flex-wrap:wrap;font-family:'Gotham','Helvetica Now Text','Helvetica Neue',Arial,sans-serif">
+
+    <div style="flex:1 1 520px;min-width:0;box-sizing:border-box;padding:clamp(20px,5cqw,48px);display:flex;flex-direction:column;align-items:flex-start;position:relative;z-index:1">
+      <span style="display:inline-flex;padding:7px 10px 6px;border-radius:4px;background:#ff9900;color:#000000;font-weight:700;font-size:clamp(11px,1.45cqw,14px);line-height:1;letter-spacing:0.02em;text-transform:uppercase">Black Friday</span>
+
+      <h2 style="margin:clamp(15px,2.9cqw,28px) 0 0;display:flex;flex-direction:column;font-family:'Gotham','Helvetica Now Display','Helvetica Neue',Arial,sans-serif;font-weight:900;font-size:clamp(30px,5.8cqw,56px);line-height:0.95;letter-spacing:0;text-transform:uppercase;text-wrap:balance">
+        <span style="color:#ffffff">RDV le</span>
+        <span style="color:#ff9900;padding-left:clamp(30px,5.8cqw,56px)">30 octobre.</span>
+      </h2>
+
+      <sc-if value="{{ running }}" hint-placeholder-val="{{ true }}">
+        <div role="timer" aria-live="off" style="margin-top:clamp(20px,3.8cqw,36px);width:100%;max-width:520px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(6px,1.25cqw,12px)">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:clamp(6px,0.9cqw,8px);padding:clamp(12px,2cqw,18px) 4px clamp(10px,1.6cqw,14px);border-radius:8px;background:#ff9900;color:#000000">
+            <span style="font-weight:900;font-size:clamp(30px,5.8cqw,56px);line-height:0.95;font-variant-numeric:tabular-nums">{{ days }}</span>
+            <span style="font-weight:700;font-size:clamp(10px,1.45cqw,14px);line-height:1;letter-spacing:0.02em;text-transform:uppercase">Jours</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:clamp(6px,0.9cqw,8px);padding:clamp(12px,2cqw,18px) 4px clamp(10px,1.6cqw,14px);border-radius:8px;background:#ff9900;color:#000000">
+            <span style="font-weight:900;font-size:clamp(30px,5.8cqw,56px);line-height:0.95;font-variant-numeric:tabular-nums">{{ hours }}</span>
+            <span style="font-weight:700;font-size:clamp(10px,1.45cqw,14px);line-height:1;letter-spacing:0.02em;text-transform:uppercase">Heures</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:clamp(6px,0.9cqw,8px);padding:clamp(12px,2cqw,18px) 4px clamp(10px,1.6cqw,14px);border-radius:8px;background:#ff9900;color:#000000">
+            <span style="font-weight:900;font-size:clamp(30px,5.8cqw,56px);line-height:0.95;font-variant-numeric:tabular-nums">{{ minutes }}</span>
+            <span style="font-weight:700;font-size:clamp(10px,1.45cqw,14px);line-height:1;letter-spacing:0.02em;text-transform:uppercase">Minutes</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:clamp(6px,0.9cqw,8px);padding:clamp(12px,2cqw,18px) 4px clamp(10px,1.6cqw,14px);border-radius:8px;background:#ff9900;color:#000000">
+            <span style="font-weight:900;font-size:clamp(30px,5.8cqw,56px);line-height:0.95;font-variant-numeric:tabular-nums">{{ seconds }}</span>
+            <span style="font-weight:700;font-size:clamp(10px,1.45cqw,14px);line-height:1;letter-spacing:0.02em;text-transform:uppercase">Secondes</span>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ ended }}" hint-placeholder-val="{{ false }}">
+        <div style="margin-top:clamp(20px,3.8cqw,36px);width:100%;max-width:520px;box-sizing:border-box;display:flex;flex-direction:column;gap:clamp(8px,1.2cqw,12px);padding:clamp(16px,2.9cqw,28px);border-radius:8px;background:#ff9900;color:#000000">
+          <span style="font-weight:900;font-size:clamp(30px,5.8cqw,56px);line-height:0.95;text-transform:uppercase">C'est parti.</span>
+          <span style="font-weight:500;font-size:clamp(15px,2.9cqw,28px);line-height:0.95">Le Black Friday a commencé.</span>
+        </div>
+      </sc-if>
+    </div>
+
+    <div style="flex:0 0 max(34%,180px);margin-left:auto;position:relative;min-height:72px">
+      <div aria-hidden="true" style="position:absolute;top:0;bottom:0;left:0;right:-200px;background:#ff9900;transform:skewX(-11.5deg);transform-origin:bottom left"></div>
+      <img src="assets/jumia-logo-white.png" alt="Jumia" style="position:absolute;right:clamp(20px,5cqw,48px);bottom:clamp(20px,5cqw,48px);height:clamp(18px,3cqw,28px);width:auto;display:block">
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;targetDate&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;2026-10-30T00:00:00&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Countdown&quot;},&quot;previewEnded&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Countdown&quot;}}">
+class Component extends DCLogic {
+  state = { now: Date.now() };
+  componentDidMount() { this.t = setInterval(() => this.setState({ now: Date.now() }), 1000); }
+  componentWillUnmount() { clearInterval(this.t); }
+  renderVals() {
+    const t = new Date(this.props.targetDate ?? '2026-10-30T00:00:00').getTime();
+    const diff = Math.max(0, (isNaN(t) ? 0 : t) - this.state.now);
+    const ended = this.props.previewEnded === true || diff <= 0;
+    const s = Math.floor(diff / 1000);
+    const p = n => String(n).padStart(2, '0');
+    return {
+      ended, running: !ended,
+      days: p(Math.floor(s / 86400)),
+      hours: p(Math.floor(s / 3600) % 24),
+      minutes: p(Math.floor(s / 60) % 60),
+      seconds: p(s % 60)
+    };
+  }
+}
+</script>
+</body>
+</html>
