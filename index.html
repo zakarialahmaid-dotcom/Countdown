@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Black Friday Countdown</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@500;700&display=swap" rel="stylesheet">
 <style>
 html,body{margin:0;padding:0;background:transparent}
 .jcd,.jcd *{box-sizing:border-box}
-.jcd{container-type:inline-size;position:relative;overflow:hidden;width:100%;margin:0 auto;border-radius:8px;background:#000;color:#fff;display:flex;flex-wrap:wrap;font-family:'Ubuntu',Arial,sans-serif;-webkit-font-smoothing:antialiased}
+.jcd{container-type:inline-size;position:relative;overflow:hidden;width:100%;margin:0 auto;border-radius:8px;background:#000;color:#fff;display:flex;flex-wrap:wrap;font-family:'Helvetica Now Text','Helvetica Neue',Arial,sans-serif;-webkit-font-smoothing:antialiased}
 .jcd-main{flex:1 1 520px;min-width:0;padding:clamp(20px,5cqw,48px);display:flex;flex-direction:column;align-items:flex-start;position:relative;z-index:1}
 .jcd-tag{display:inline-flex;padding:7px 10px 6px;border-radius:4px;background:#f90;color:#000;font-weight:700;font-size:clamp(11px,1.45cqw,14px);line-height:1;letter-spacing:.02em;text-transform:uppercase}
-.jcd-title{margin:clamp(15px,2.9cqw,28px) 0 0;display:flex;flex-direction:column;font-weight:700;font-size:clamp(30px,5.8cqw,56px);line-height:.95;text-transform:uppercase}
+.jcd-title,.jcd-num,.jcd-ended b{font-family:'Helvetica Now Display','Arial Black',Arial,sans-serif;font-weight:900!important}
+.jcd-title{margin:clamp(15px,2.9cqw,28px) 0 0;display:flex;flex-direction:column;font-size:clamp(30px,5.8cqw,56px);line-height:.95;text-transform:uppercase}
 .jcd-title span+span{color:#f90;padding-left:clamp(30px,5.8cqw,56px)}
 .jcd-timer,.jcd-ended{margin-top:clamp(20px,3.8cqw,36px);width:100%;max-width:520px}
 .jcd-timer{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(6px,1.25cqw,12px)}
@@ -24,6 +24,13 @@ html,body{margin:0;padding:0;background:transparent}
 .jcd-side{flex:0 0 max(34%,180px);margin-left:auto;position:relative;min-height:72px}
 .jcd-side i{position:absolute;top:0;bottom:0;left:0;right:-200px;background:#f90;transform:skewX(-11.5deg);transform-origin:bottom left}
 .jcd-side img{position:absolute;right:clamp(20px,5cqw,48px);bottom:clamp(20px,5cqw,48px);height:clamp(18px,3cqw,28px);width:auto;display:block}
+.jcd-dream{margin-top:clamp(16px,3cqw,28px);width:100%;max-width:520px;display:flex;flex-wrap:wrap;align-items:center;gap:clamp(10px,1.6cqw,16px)}
+.jcd-dream p{flex:1 1 220px;margin:0;font-size:clamp(13px,1.6cqw,16px);line-height:1.25}
+.jcd-dream strong{display:block;color:#f90}
+.jcd-cta{display:inline-block;padding:13px 22px;border-radius:999px;background:#fff;color:#000;font-weight:700;font-size:clamp(12px,1.45cqw,14px);line-height:1;text-decoration:none;text-transform:uppercase;white-space:nowrap}
+.jcd-cta:hover,.jcd-cta:focus-visible{background:#f90}
+.jcd-cta:focus-visible{outline:3px solid #fff;outline-offset:2px}
+@container (max-width:480px){.jcd-cta{width:100%;text-align:center}}
 [hidden]{display:none!important}
 </style>
 </head>
@@ -42,6 +49,10 @@ html,body{margin:0;padding:0;background:transparent}
       <b>C'est parti.</b>
       <span>Le Black Friday a commencé.</span>
     </div>
+    <div class="jcd-dream">
+      <p><strong>En attendant, cr&eacute;ez votre Dream List.</strong>Ajoutez les produits dont vous r&ecirc;vez&hellip; on pourrait bien r&eacute;aliser votre r&ecirc;ve.</p>
+      <a class="jcd-cta" href="https://www.jumia.ma/mlp-dream-list/">Je cr&eacute;e ma Dream List</a>
+    </div>
   </div>
   <div class="jcd-side" aria-hidden="true">
     <i></i>
@@ -55,6 +66,7 @@ html,body{margin:0;padding:0;background:transparent}
   var target = new Date(root.getAttribute('data-target')).getTime();
   var timer = root.querySelector('.jcd-timer');
   var ended = root.querySelector('.jcd-ended');
+  var dream = root.querySelector('.jcd-dream');
   var el = {};
   ['d', 'h', 'm', 's'].forEach(function (u) { el[u] = root.querySelector('[data-u="' + u + '"]'); });
   function p(n) { return n < 10 ? '0' + n : String(n); }
@@ -63,6 +75,7 @@ html,body{margin:0;padding:0;background:transparent}
     if (diff <= 0) {
       timer.hidden = true;
       ended.hidden = false;
+      dream.hidden = true;
       clearInterval(id);
       return;
     }
