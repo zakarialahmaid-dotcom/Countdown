@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Black Friday Countdown</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+html,body{margin:0;padding:0;background:transparent}
+.jbf,.jbf *{box-sizing:border-box}
+
+/* Desktop: fixed 3:1 banner, everything scales with its width (cqw) */
+.jbf{--jbf-art:url("https://ma.jumia.is/cms/000_2026/000010_October/Black_friday/BlackF.jpg");container-type:inline-size;position:relative;overflow:hidden;width:100%;max-width:1200px;margin:0 auto;aspect-ratio:2000/667;border-radius:8px;background:#000;color:#fff;font-family:'Ubuntu',Arial,sans-serif;-webkit-font-smoothing:antialiased}
+
+/* Right-hand artwork, clipped along the orange diagonal */
+.jbf-art{position:absolute;inset:0;background:var(--jbf-art) right center/cover no-repeat}
+.jbf-main{position:relative;z-index:1;height:100%;width:58%;padding:0 0 0 5cqw;display:flex;flex-direction:column;justify-content:center;align-items:flex-start}
+.jbf-tag{display:inline-block;padding:.55cqw 1.6cqw .5cqw;border-radius:999px;background:#FE550C;color:#000;font-weight:700;font-size:max(10.5px,1.4cqw);line-height:1;text-transform:uppercase}
+.jbf-title{margin:1cqw 0 0;white-space:nowrap;font-family:'Ubuntu',Arial,sans-serif;font-weight:700;font-size:4.6cqw;line-height:1;text-transform:uppercase}
+.jbf-title span{display:inline}
+.jbf-title span+span{color:#FE550C}
+.jbf-timer,.jbf-ended{margin-top:1.6cqw;width:47cqw}
+.jbf-timer{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.6cqw}
+.jbf-box{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.25cqw;height:5.4cqw;border-radius:.6cqw;background:#FFF;color:#000}
+.jbf-num{font-family:'Ubuntu',Arial,sans-serif;font-weight:700;font-size:3.9cqw;line-height:.9;font-variant-numeric:tabular-nums}
+.jbf-lbl{font-weight:700;font-size:max(9px,1.1cqw);line-height:1;text-transform:uppercase}
+.jbf-ended{display:flex;flex-direction:column;justify-content:center;gap:.6cqw;height:5.4cqw;padding:0 2cqw;border-radius:.6cqw;background:#FE550C;color:#000}
+.jbf-ended b{font-family:'Ubuntu',Arial,sans-serif;font-weight:700;font-size:3cqw;line-height:.95;text-transform:uppercase}
+.jbf-ended span{font-weight:700;font-size:1.4cqw}
+
+.jbf-dream{margin-top:2.2cqw;width:47cqw;display:flex;align-items:center;gap:2.2cqw}
+.jbf-dream p{flex:1 1 auto;margin:0;font-size:max(10.5px,1.1cqw);line-height:1.35}
+.jbf-dream strong{display:block;margin-bottom:.2cqw;color:#FE550C;font-size:max(11.5px,1.2cqw)}
+.jbf-cta{flex:0 0 auto;display:inline-flex;align-items:center;gap:1cqw;padding:1.15cqw 2cqw;border-radius:999px;background:#fff;color:#000;font-weight:700;font-size:max(10.5px,1.1cqw);line-height:1;text-decoration:none;text-transform:uppercase;white-space:nowrap}
+.jbf-cta svg{width:1.3cqw;height:1.3cqw}
+.jbf-cta:hover,.jbf-cta:focus-visible{background:#FE550C}
+.jbf-cta:focus-visible{outline:3px solid #fff;outline-offset:2px}
+
+/* Narrow (< 900px): gifts stay on the right as a column beside the text */
+@container (max-width:899px){
+  .jbf-main{height:auto;width:62%;padding:22px 0 22px 18px}
+  .jbf-tag{padding:6px 12px 5px;font-size:11px}
+  .jbf-title{margin-top:12px;font-size:calc(5.9cqw - 2px)}
+  .jbf-timer,.jbf-ended,.jbf-dream{width:100%}
+  .jbf-timer{margin-top:14px;gap:12px}
+  .jbf-box{height:auto;padding:6px 2px;gap:2px;border-radius:8px}
+  .jbf-num{font-size:clamp(22px,5.6cqw,40px)}
+  .jbf-lbl{font-size:clamp(9px,1.6cqw,12px)}
+  .jbf-ended{margin-top:14px;height:auto;padding:14px;border-radius:8px}
+  .jbf-ended b{font-size:22px}
+  .jbf-ended span{font-size:13px}
+  .jbf-dream{margin-top:16px;flex-direction:column;align-items:stretch;gap:12px}
+  .jbf-dream p{font-size:13px}
+  .jbf-dream strong{font-size:14px}
+  .jbf-cta{justify-content:center;gap:8px;padding:12px 14px;font-size:12px;white-space:normal;text-align:center}
+  .jbf-cta svg{flex:0 0 auto;width:14px;height:14px}
+  .jbf-art{left:auto;width:44%;background:var(--jbf-art) 75% center/cover no-repeat;-webkit-mask-image:linear-gradient(to right,transparent,#000 35%);mask-image:linear-gradient(to right,transparent,#000 35%)}
+}
+@container (max-width:559px){
+  .jbf-timer{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .jbf-num{font-size:26px}
+  .jbf-lbl{font-size:10px}
+}
+@media (max-width:899px){
+  .jbf{aspect-ratio:auto}
+}[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<div class="jbf" data-target="2026-10-30T00:00:00+01:00">
+  <div class="jbf-art" aria-hidden="true"></div>
+  <div class="jbf-main">
+    <span class="jbf-tag">Black Friday</span>
+    <h2 class="jbf-title"><span>RDV le</span> <span>30 octobre.</span></h2>
+    <div class="jbf-timer" role="timer" aria-live="off">
+      <div class="jbf-box"><span class="jbf-num" data-u="d">00</span><span class="jbf-lbl">Jours</span></div>
+      <div class="jbf-box"><span class="jbf-num" data-u="h">00</span><span class="jbf-lbl">Heures</span></div>
+      <div class="jbf-box"><span class="jbf-num" data-u="m">00</span><span class="jbf-lbl">Minutes</span></div>
+      <div class="jbf-box"><span class="jbf-num" data-u="s">00</span><span class="jbf-lbl">Secondes</span></div>
+    </div>
+    <div class="jbf-ended" hidden>
+      <b>C'est parti.</b>
+      <span>Le Black Friday a commenc&eacute;.</span>
+    </div>
+    <div class="jbf-dream">
+      <p><strong>En attendant, cr&eacute;ez votre Dream List.</strong>Ajoutez vos produits pr&eacute;f&eacute;r&eacute;s d&egrave;s maintenant &mdash; et soyez pr&ecirc;t le jour J&nbsp;!</p>
+      <a class="jbf-cta" href="https://www.jumia.ma/mlp-dream-list/" target="_top">Je cr&eacute;e ma Dream List<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+    </div>
+  </div>
+</div>
+<script>
+(function () {
+  var root = document.querySelector('.jbf');
+  // Morocco time (UTC+1). Change data-target above to move the date.
+  var target = new Date(root.getAttribute('data-target')).getTime();
+  var timer = root.querySelector('.jbf-timer');
+  var ended = root.querySelector('.jbf-ended');
+  var dream = root.querySelector('.jbf-dream');
+  var el = {};
+  ['d', 'h', 'm', 's'].forEach(function (u) { el[u] = root.querySelector('[data-u="' + u + '"]'); });
+  function p(n) { return n < 10 ? '0' + n : String(n); }
+  function tick() {
+    var diff = Math.max(0, (isNaN(target) ? 0 : target) - Date.now());
+    if (diff <= 0) {
+      timer.hidden = true;
+      ended.hidden = false;
+      dream.hidden = true;
+      clearInterval(id);
+      return;
+    }
+    var s = Math.floor(diff / 1000);
+    el.d.textContent = p(Math.floor(s / 86400));
+    el.h.textContent = p(Math.floor(s / 3600) % 24);
+    el.m.textContent = p(Math.floor(s / 60) % 60);
+    el.s.textContent = p(s % 60);
+  }
+  var id = setInterval(tick, 1000);
+  tick();
+})();
+</script>
+</body>
+</html>
